@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Welcome to WeMovies {% endblock %}
+
+{% block topsection %}
+    <div class="container">
+        <a class="navbar-brand" href="#">A propos de We Movies</a>
+        <div class="card mb-4">
+            {% include 'home/autocomplete.html.twig' with {formAutocomplete: formAutocomplete} only %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block bestsection %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-best text-white card-has-bg-best click-col"
+                 style="background-image:url('{{ imageConfiguration.secureBaseUrl }}{{ imageConfiguration.backdropSizes[2] }}{{ bestMovie.backdropPath }}');">
+                <div class="card-img-overlay-best d-flex flex-column">
+                    <div class="card-footer-best">
+                        <div class="media-best">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img class="mr-3"
+                                         src="{{ imageConfiguration.secureBaseUrl }}{{ imageConfiguration.posterSizes[0] }}{{ bestMovie.posterPath }}"
+                                         alt="Generic placeholder image" >
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="media-body">
+                                            <h6 class="my-0 text-white d-block">{{ bestMovie.title }}</h6>
+                                            <small>{{ bestMovie.overview }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block body %}
+    <!-- Side widgets-->
+    <div class="col-lg-3">
+        <div class="card mb-4">
+            <div class="card-header">Genres</div>
+            <div class="card-body">
+                <div class="checkbox checkbox-primary">
+                    {% include 'home/filter.html.twig' with {form: form} only %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render_esi(controller('App\\Controller\\MovieController::createMovieList')) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('filter') }}
+{% endblock %}
+

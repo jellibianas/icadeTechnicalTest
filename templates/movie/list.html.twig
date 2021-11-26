@@ -1,0 +1,52 @@
+{% block body %}
+    <div class="col-lg-9 js-filter-content">
+        <div class="list-group">
+
+            {% for movie in resultMovie %}
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img class="media-object img-rounded img-responsive" src="{{ imageConfiguration.secureBaseUrl }}{{ imageConfiguration.posterSizes[0] }}{{ movie.posterPath }}">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="d-md-flex align-items-md-center">
+                                <div class="name">{{ movie.title }}</div>
+                                <div style="padding: 0px 10px 0px 10px;">
+                                    {% for i in 1..5 %}
+                                        {% if movie.voteAverage | round / 2 >= i %}
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        {% else %}
+                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+                                <span class="city"> ({{ movie.voteCount }} votes) </span>
+                            </div>
+                            <div></div>
+                            <p class="list-group-item-text"> {{ movie.overview }}         </p>
+                        </div>
+                        <div class="d-flex align-items-end flex-column bd-highlight mb-3">
+                            <div class="btn btn-primary">Lire de détails</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- Pagination-->
+        <nav aria-label="Pagination" class="js-filter-pagination">
+            <hr class="my-0"/>
+            <ul class="pagination justify-content-center my-4">
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
+                                                  aria-disabled="true">Newer</a></li>
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
